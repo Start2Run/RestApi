@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace Business.Contracts
 {
-    public interface ISchedulerManager
+    public interface ISchedulerManager : IDisposable
     {
-        void Start();
+        void Start(Func<Task> taskToExecute);
     }
 }

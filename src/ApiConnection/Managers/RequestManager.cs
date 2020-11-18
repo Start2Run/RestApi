@@ -18,7 +18,7 @@ namespace ApiConnection.Managers
             try
             {
                 var result = await address
-                    .SetQueryParam(Globals.Longitude,configuration.Longitude)
+                    .SetQueryParam(Globals.Longitude, configuration.Longitude)
                     .SetQueryParam(Globals.Latitude, configuration.Latitude)
                     .WithHeader(Globals.ApiKey, configuration.ApiKey)
                     .WithHeader(Globals.ApiHost, configuration.ApiHost)

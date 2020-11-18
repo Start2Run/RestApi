@@ -34,7 +34,7 @@
         public double lat { get; set; }
         public Weather weather { get; set; }
         public string datetime { get; set; }
-        public int temp { get; set; }
+        public double temp { get; set; }
         public string station { get; set; }
         public double elev_angle { get; set; }
         public double app_temp { get; set; }
