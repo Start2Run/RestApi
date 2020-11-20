@@ -8,10 +8,10 @@ namespace Business.Managers
 {
     public class SchedulerManager : ISchedulerManager
     {
-        private readonly ConfigurationModel _configuration;
+        private readonly IConfigurationModel _configuration;
         private IDisposable _timer;
 
-        public SchedulerManager(ConfigurationModel configuration)
+        public SchedulerManager(IConfigurationModel configuration)
         {
             _configuration = configuration;
         }

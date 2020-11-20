@@ -1,36 +1,43 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ApiConnection.Contracts;
 using Common;
 using Common.Models;
 using Common.Models.RestApi;
+using Communication.Contracts;
 using Flurl;
 using Flurl.Http;
 
-namespace ApiConnection.Managers
+namespace Communication.Managers
 {
     public class RequestManager : IRequestManager
     {
-        public async Task<Root> GetRequestAsync(ConfigurationModel configuration)
+        private readonly IConfigurationModel _configuration;
+        public RequestManager(IConfigurationModel configuration)
         {
-            var address = configuration.ApiAddress;
-            
+            _configuration = configuration;
+        }
+
+        public async Task<RestApiModel> GetRequestAsync()
+        {
+            var address = _configuration.ApiAddress;
+            var response = new RestApiModel { IsSuccessful = true };
             try
             {
                 var result = await address
-                    .SetQueryParam(Globals.Longitude, configuration.Longitude)
-                    .SetQueryParam(Globals.Latitude, configuration.Latitude)
-                    .WithHeader(Globals.ApiKey, configuration.ApiKey)
-                    .WithHeader(Globals.ApiHost, configuration.ApiHost)
-                    .GetJsonAsync<Root>();
-                return result;
+                    .SetQueryParam(Globals.Longitude, _configuration.Longitude)
+                    .SetQueryParam(Globals.Latitude, _configuration.Latitude)
+                    .WithHeader(Globals.ApiKey, _configuration.ApiKey)
+                    .WithHeader(Globals.ApiHost, _configuration.ApiHost).GetJsonAsync<Root>();
+
+                response.WeatherModel = result;
             }
             catch (Exception e)
             {
+                response.IsSuccessful = false;
                 Console.WriteLine(e);
             }
-           
-            return null;
+
+            return response;
         }
     }
 }

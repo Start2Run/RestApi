@@ -3,8 +3,9 @@ using System.Configuration;
 
 namespace Common.Models
 {
-    public class ConfigurationModel
+    public class ConfigurationModel : IConfigurationModel
     {
+        public string DatabaseName { get; private set; }
         public int PullIntervalInSeconds { get; private set; }
         public string ApiAddress { get; private set; }
         public string ApiKey { get; private set; }
@@ -16,6 +17,7 @@ namespace Common.Models
 
         public void Load()
         {
+            DatabaseName = ConfigurationManager.AppSettings.Get(Globals.DatabaseName);
             PullIntervalInSeconds = int.TryParse(ConfigurationManager.AppSettings.Get(Globals.PullIntervalInSeconds), out var interval) ? interval : Globals.DefaultPullIntervalInSeconds;
             ApiAddress = ConfigurationManager.AppSettings.Get(Globals.ApiAddress);
             ApiKey = ConfigurationManager.AppSettings.Get(Globals.ApiKey);

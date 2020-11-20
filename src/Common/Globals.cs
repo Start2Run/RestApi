@@ -2,6 +2,8 @@
 {
     public static class Globals
     {
+        public static readonly string DatabaseName = "DatabaseName";
+        public static readonly string TableName = "Weather";
         public static readonly string PullIntervalInSeconds = "PullIntervalInSeconds";
         public static readonly int DefaultPullIntervalInSeconds = 10;
         public static readonly string ApiAddress = "ApiAddress";

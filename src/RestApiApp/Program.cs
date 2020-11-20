@@ -1,7 +1,10 @@
 ﻿using System;
-using ApiConnection.Managers;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using Business.Managers;
+using Common;
 using Common.Models;
+using Communication.Managers;
 using Newtonsoft.Json;
 using Persistence.Contracts;
 using Persistence.Managers;
@@ -13,24 +16,31 @@ namespace RestApiApp
         public static void Main(string[] args)
         {
             var configuration = new ConfigurationModel();
-            var dbManager = new DbManager();
+            var dbHandler = new DatabaseHandler(configuration);
+            var dbManager = new DatabaseManager(dbHandler);
 
             configuration.Load();
 
-            bool showMenu = true;
+            if (!dbManager.Init())
+            {
+                Console.WriteLine("Could not initialise the DB");
+            }
+
+            var showMenu = true;
             while (showMenu)
             {
                 showMenu = MainMenu(configuration, dbManager);
             }
         }
 
-        private static bool MainMenu(ConfigurationModel configuration, IDbManager dbManager)
+        private static bool MainMenu(IConfigurationModel configuration, IDbManager dbManager)
         {
             Console.Clear();
             Console.WriteLine("Choose an option:");
             Console.WriteLine("1) Get temperature from REST API endpoint");
             Console.WriteLine("2) Show stored DB entries");
-            Console.WriteLine("3) Exit");
+            Console.WriteLine("3) Clear Database Table data");
+            Console.WriteLine("4) Exit");
             Console.Write("\r\nSelect an option: ");
 
             switch (Console.ReadLine())
@@ -39,31 +49,44 @@ namespace RestApiApp
                     ReadApiData(configuration, dbManager);
                     return true;
                 case "2":
-                    ReadDbEntries(dbManager);
+                    ReadDbEntries(dbManager).GetAwaiter();
                     return true;
                 case "3":
-                    return false;
-                default:
+                    ClearTable(dbManager).GetAwaiter();
                     return true;
+                default:
+                    return false;
             }
         }
 
 
-        private static void ReadApiData(ConfigurationModel configuration, IDbManager dbManager)
+        private static void ReadApiData(IConfigurationModel configuration, IDbManager dbManager)
         {
-            var requestManager = new RequestManager();
+            Console.WriteLine($"Wait {configuration.PullIntervalInSeconds} seconds to receive the data!!!");
+            var requestManager = new RequestManager(configuration);
             var scheduler = new SchedulerManager(configuration);
-            var mainManager = new MainManager(requestManager, scheduler, dbManager, configuration);
+            var mainManager = new MainManager(requestManager, scheduler, dbManager);
             mainManager.Init();
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
         }
 
-        private static void ReadDbEntries(IDbManager dbManager)
+        private static async Task ReadDbEntries(IDbManager dbManager)
         {
-            var entries = dbManager.GetAllData();
+            var entries = await dbManager.GetAllData();
             foreach (var item in entries)
             {
                 Console.WriteLine(JsonConvert.SerializeObject(item, Formatting.Indented));
             }
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+        }
+
+        private static async Task ClearTable(IDbManager dbManager)
+        {
+            await dbManager.Clear();
+            Console.WriteLine($"Database table {Globals.TableName} has been cleared. Press any key to continue...");
+            Console.ReadKey();
         }
     }
 }

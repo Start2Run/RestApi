@@ -4,8 +4,9 @@ using Persistence.Models;
 
 namespace Persistence.Contracts
 {
-    public interface IDbManager
+    public interface IDatabaseHandler
     {
+        bool Init();
         Task Insert(DbModel model);
         Task<IEnumerable<DbModel>> GetAllData();
         Task Clear();

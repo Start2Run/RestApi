@@ -5,17 +5,17 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "src\Persistence\Persistence.csproj", "{5414E2BB-7FC0-41D6-A8A1-95E950342515}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiConnection", "src\ApiConnection\ApiConnection.csproj", "{A03F8E38-0D6B-48D1-B3CD-655E8D283EDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Communication", "src\ApiConnection\Communication.csproj", "{A03F8E38-0D6B-48D1-B3CD-655E8D283EDE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApiApp", "src\RestApiApp\RestApiApp.csproj", "{6A0F2BBF-AB4B-47A1-AB74-4DF6D3D62725}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "src\Common\Common.csproj", "{CA145DC5-CAAF-40E1-8437-4B294368D737}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "src\Common\Common.csproj", "{CA145DC5-CAAF-40E1-8437-4B294368D737}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{AFADE93C-03E8-4C77-94F6-64CB791F106A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiConnectionTests", "tests\ApiConnectionTests\ApiConnectionTests.csproj", "{3E3FD667-9A8A-4DF5-AC14-0040E00E2BC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiConnectionTests", "tests\ApiConnectionTests\ApiConnectionTests.csproj", "{3E3FD667-9A8A-4DF5-AC14-0040E00E2BC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "src\Business\Business.csproj", "{0357B3FD-3247-4213-83E5-DAD2C16BAF24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "src\Business\Business.csproj", "{0357B3FD-3247-4213-83E5-DAD2C16BAF24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

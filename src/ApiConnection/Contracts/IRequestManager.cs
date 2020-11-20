@@ -1,11 +1,10 @@
 ﻿using System.Threading.Tasks;
-using Common.Models;
 using Common.Models.RestApi;
 
-namespace ApiConnection.Contracts
+namespace Communication.Contracts
 {
     public interface IRequestManager
     {
-        Task<Root> GetRequestAsync(ConfigurationModel configuration);
+        Task<RestApiModel> GetRequestAsync();
     }
 }

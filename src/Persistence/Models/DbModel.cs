@@ -11,6 +11,6 @@ namespace Persistence.Models
         public double Latitude { get; set; }
         public double Temperature { get; set; }
 
-        public DateTime DateTime { get; set; }
+        public string DateTime { get; set; }
     }
 }
