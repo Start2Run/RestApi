@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiConnectionTests", "tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "src\Business\Business.csproj", "{0357B3FD-3247-4213-83E5-DAD2C16BAF24}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecFlowBDD", "tests\SpecFlow-BDD\SpecFlowBDD.csproj", "{DA5C8E63-AC4C-418D-9DB9-F930201BD832}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{0357B3FD-3247-4213-83E5-DAD2C16BAF24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0357B3FD-3247-4213-83E5-DAD2C16BAF24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0357B3FD-3247-4213-83E5-DAD2C16BAF24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA5C8E63-AC4C-418D-9DB9-F930201BD832}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA5C8E63-AC4C-418D-9DB9-F930201BD832}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA5C8E63-AC4C-418D-9DB9-F930201BD832}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA5C8E63-AC4C-418D-9DB9-F930201BD832}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
