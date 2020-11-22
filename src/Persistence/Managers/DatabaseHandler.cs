@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Common.Models;
 using Dapper;
-using Microsoft.Data.Sqlite;
 using Persistence.Contracts;
 using Persistence.Models;
 using System.Data.SQLite;
@@ -13,19 +12,19 @@ namespace Persistence.Managers
 {
     public class DatabaseHandler : IDatabaseHandler
     {
+        private readonly IDatabaseConnectionFactory _connectionFactory;
         private readonly ConfigurationModel _configuration;
-        private string _connectionString;
 
-        public DatabaseHandler(ConfigurationModel configuration)
+        public DatabaseHandler(IDatabaseConnectionFactory connectionFactory, ConfigurationModel configuration)
         {
             _configuration = configuration;
+            _connectionFactory = connectionFactory;
         }
 
         public bool Init()
         {
             try
             {
-                _connectionString = $"DataSource={_configuration.DatabaseName};";
                 CreateDb();
             }
             catch (Exception e)
@@ -39,10 +38,10 @@ namespace Persistence.Managers
 
         public async Task Insert(DbModel model)
         {
-            await using var connection = new SqliteConnection(_connectionString);
-
-            await connection.ExecuteAsync($"INSERT INTO {Globals.TableName} (Longitude, Latitude, Temperature, DateTime)" +
-                                          "VALUES (@Longitude, @Latitude, @Temperature, @DateTime);", model);
+            using var connection = _connectionFactory.GetConnection();
+            await connection.ExecuteAsync(
+                $"INSERT INTO {Globals.TableName} (Longitude, Latitude, Temperature, DateTime)" +
+                "VALUES (@Longitude, @Latitude, @Temperature, @DateTime);", model);
         }
 
         public async Task<IEnumerable<DbModel>> GetAllData()
@@ -50,9 +49,8 @@ namespace Persistence.Managers
             IEnumerable<DbModel> result = new List<DbModel>();
             try
             {
-                await using var connection = new SqliteConnection(_connectionString);
+                using var connection = _connectionFactory.GetConnection();
                 result = await connection.QueryAsync<DbModel>($"SELECT rowid AS Id, Longitude, Latitude, Temperature, DateTime FROM {Globals.TableName};");
-
             }
             catch (Exception e)
             {
@@ -63,7 +61,7 @@ namespace Persistence.Managers
 
         public async Task Clear()
         {
-            await using var connection = new SqliteConnection(_connectionString);
+            using var connection = _connectionFactory.GetConnection();
             await connection.ExecuteAsync($"Delete FROM {Globals.TableName}");
         }
 
@@ -74,14 +72,15 @@ namespace Persistence.Managers
 
             SQLiteConnection.CreateFile(_configuration.DatabaseName);
 
-            using var sqLite = new SQLiteConnection(_connectionString);
-            sqLite.Open();
+            using var connection = _connectionFactory.GetConnection();
+            connection.Open();
             var sql = $"create table {Globals.TableName} (" +
                          "Longitude Real," +
                          "Latitude Real," +
                          "Temperature Real," +
                          "DateTime VARCHAR(100));";
-            var command = new SQLiteCommand(sql, sqLite);
+            var command = connection.CreateCommand();
+            command.CommandText = sql;
             command.ExecuteNonQuery();
         }
     }

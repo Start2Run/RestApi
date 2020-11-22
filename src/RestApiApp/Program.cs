@@ -12,7 +12,8 @@ namespace RestApiApp
         public static void Main(string[] args)
         {
             var configuration = new ConfigurationModel();
-            var dbHandler = new DatabaseHandler(configuration);
+            var connectionFactory = new DatabaseConnectionFactory(configuration);
+            var dbHandler = new DatabaseHandler(connectionFactory,configuration);
             var dbManager = new DatabaseManager(dbHandler);
             var requestManager = new RequestManager(configuration);
             var scheduler = new SchedulerManager(configuration);
