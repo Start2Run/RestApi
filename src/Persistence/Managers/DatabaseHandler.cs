@@ -7,15 +7,16 @@ using Persistence.Contracts;
 using Persistence.Models;
 using System.Data.SQLite;
 using Common;
+using Persistence.Extensions;
 
 namespace Persistence.Managers
 {
     public class DatabaseHandler : IDatabaseHandler
     {
         private readonly IDatabaseConnectionFactory _connectionFactory;
-        private readonly ConfigurationModel _configuration;
+        private readonly IConfigurationModel _configuration;
 
-        public DatabaseHandler(IDatabaseConnectionFactory connectionFactory, ConfigurationModel configuration)
+        public DatabaseHandler(IDatabaseConnectionFactory connectionFactory, IConfigurationModel configuration)
         {
             _configuration = configuration;
             _connectionFactory = connectionFactory;
@@ -38,10 +39,18 @@ namespace Persistence.Managers
 
         public async Task Insert(DbModel model)
         {
-            using var connection = _connectionFactory.GetConnection();
-            await connection.ExecuteAsync(
-                $"INSERT INTO {Globals.TableName} (Longitude, Latitude, Temperature, DateTime)" +
-                "VALUES (@Longitude, @Latitude, @Temperature, @DateTime);", model);
+            try
+            {
+                using var connection = _connectionFactory.GetConnection();
+                connection.Open();
+                await connection.ExecuteAsync(
+                    $"INSERT INTO {Globals.TableName} (Longitude, Latitude, Temperature, DateTime)" +
+                    "VALUES (@Longitude, @Latitude, @Temperature, @DateTime);", model);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         public async Task<IEnumerable<DbModel>> GetAllData()
@@ -73,15 +82,8 @@ namespace Persistence.Managers
             SQLiteConnection.CreateFile(_configuration.DatabaseName);
 
             using var connection = _connectionFactory.GetConnection();
-            connection.Open();
-            var sql = $"create table {Globals.TableName} (" +
-                         "Longitude Real," +
-                         "Latitude Real," +
-                         "Temperature Real," +
-                         "DateTime VARCHAR(100));";
-            var command = connection.CreateCommand();
-            command.CommandText = sql;
-            command.ExecuteNonQuery();
+            connection.CreateTableIfNotExists(
+                Globals.TableName);
         }
     }
 }

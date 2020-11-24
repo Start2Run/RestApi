@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiConnectionTests", "tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "src\Business\Business.csproj", "{0357B3FD-3247-4213-83E5-DAD2C16BAF24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecFlowBDD", "tests\SpecFlow-BDD\SpecFlowBDD.csproj", "{DA5C8E63-AC4C-418D-9DB9-F930201BD832}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpecFlowBDD", "tests\SpecFlow-BDD\SpecFlowBDD.csproj", "{DA5C8E63-AC4C-418D-9DB9-F930201BD832}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistenceTests", "tests\PersistenceTests\PersistenceTests.csproj", "{91E8913A-13BB-4074-838A-39DF501664E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,12 +55,17 @@ Global
 		{DA5C8E63-AC4C-418D-9DB9-F930201BD832}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA5C8E63-AC4C-418D-9DB9-F930201BD832}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA5C8E63-AC4C-418D-9DB9-F930201BD832}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91E8913A-13BB-4074-838A-39DF501664E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91E8913A-13BB-4074-838A-39DF501664E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91E8913A-13BB-4074-838A-39DF501664E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91E8913A-13BB-4074-838A-39DF501664E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3E3FD667-9A8A-4DF5-AC14-0040E00E2BC5} = {AFADE93C-03E8-4C77-94F6-64CB791F106A}
+		{91E8913A-13BB-4074-838A-39DF501664E0} = {AFADE93C-03E8-4C77-94F6-64CB791F106A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F40D7940-E39D-4ABC-AD27-F64EBF545D82}
